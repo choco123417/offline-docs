@@ -258,9 +258,90 @@ jobs:
           tar czf "reactjs.tar.gz" reactjs.org/public
 
       # Step 25: Upload the generated tar.gz files as an artifact
-      - name: Upload Documentation Artifacts
+
+      - name: Upload Express.js Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: offline-documentation
-          path: "*.tar.gz"
+          name: expressjs.tar.gz
+          path: expressjs.tar.gz
+      # - name: Upload Hardhat Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: hardhat.tar.gz
+      #     path: hardhat.tar.gz
+      # - name: Upload Solidity Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: solidity.tar.gz
+      #     path: solidity.tar.gz
+      # - name: Upload Vite Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: vite.tar.gz
+      #     path: vite.tar.gz
+      - name: Upload Electron Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Electron.tar.gz
+          path: Electron.tar.gz
+      - name: Upload Bootstrap Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap 5.tar.gz
+          path: bootstrap 5.tar.gz
 
+      # - name: Upload TailwindCSS Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: tailwindcss.tar.gz
+      #     path: tailwindcss.tar.gz
+      - name: Upload Axios Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: axios.tar.gz
+          path: axios.tar.gz
+      - name: Upload React Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reactjs.tar.gz
+          path: reactjs.tar.gz
+      # - name: Upload Vue.js Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: vuejs V3.tar.gz
+      #     path: vuejs V3.tar.gz
+      # - name: Upload Keras Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: keras.tar.gz
+      #     path: keras.tar.gz
+      # - name: Upload NumPy Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: numpy.tar.gz
+      #     path: numpy.tar.gz
+      # - name: Upload NumPy Tutorials Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: numpy-tutorials.tar.gz
+      #     path: numpy-tutorials.tar.gz
+      # - name: Upload Pandas Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: pandas.tar.gz
+      #     path: pandas.tar.gz
+      # - name: Upload FastAPI Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: fastapi.tar.gz
+      #     path: fastapi.tar.gz
+      - name: Upload TypeScript Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: typescript.tar.gz
+          path: typescript.tar.gz
+      - name: Upload MDN Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mozilla Developer Network.tar.gz
+          path: Mozilla Developer Network.tar.gz
