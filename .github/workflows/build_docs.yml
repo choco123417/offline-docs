@@ -112,7 +112,7 @@ jobs:
           sed -i "s|export default {|export default {\n  images: { unoptimized: true},\n|g" next.config.ts
           pnpm run build
           cd ..
-          tar czf "tailwindcss.tar.gz" tailwindcss.com/out
+          tar czf "tailwindcss.tar.gz" tailwindcss.com/.next
 
       # Step 15: Build Axios Documentation
       - name: Build Axios Docs
