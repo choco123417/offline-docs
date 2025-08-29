@@ -159,15 +159,15 @@ jobs:
       #     tar czf "pandas.tar.gz" ./
 
       # Step 22: Build FastAPI Documentation
-      - name: Build FastAPI Docs
-        run: |
-          git clone --depth=1 https://github.com/tiangolo/fastapi
-          cd fastapi
-          pip install flit
-          flit install --user --extras doc
-          sh scripts/build-docs.sh
-          cd ..
-          tar czf "fastapi.tar.gz" fastapi/site
+      # - name: Build FastAPI Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/tiangolo/fastapi
+      #     cd fastapi
+      #     pip install flit
+      #     flit install --user --extras doc
+      #     sh scripts/build-docs.sh
+      #     cd ..
+      #     tar czf "fastapi.tar.gz" fastapi/site
 
       # Step 23: Build TypeScript Documentation
       - name: Build TypeScript Docs
