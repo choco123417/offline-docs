@@ -107,10 +107,10 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/tailwindlabs/tailwindcss.com
           cd tailwindcss.com
-          yarn install
+          pnpm install
           # Modifying the next.config.mjs file to disable image optimization.
           sed -i "s|export default {|export default {\n  images: { unoptimized: true},\n|g" next.config.mjs
-          yarn export
+          pnpm export
           cd ..
           tar czf "tailwindcss.tar.gz" tailwindcss.com/out
 
