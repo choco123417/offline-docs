@@ -48,17 +48,6 @@ jobs:
         with:
           ruby-version: '3.1'
 
-      # Step 6: Build Express.js Documentation
-      - name: Build Express.js Docs
-        run: |
-          git clone --depth=1 https://github.com/expressjs/expressjs.com
-          cd expressjs.com
-          sed -i "s|'110', ||g" Gemfile
-          bundle install
-          gem install jekyll-redirect-from
-          bundle exec jekyll build
-          cd ..
-          tar czf "expressjs.tar.gz" expressjs.com/_site
 
       # Step 7: Build Ethereum.org Website
       # - name: Build Ethereum.org Website
@@ -111,37 +100,7 @@ jobs:
       #     cd ..
       #     tar czf "vite.tar.gz" vite/docs/.vitepress/dist
 
-      # Step 11: Build Electron Documentation
-      - name: Build Electron Docs
-        run: |
-          git clone --depth=1 https://github.com/electron/electronjs.org-new
-          cd electronjs.org-new
-          yarn install
-          yarn build
-          cd ..
-          tar czf "Electron.tar.gz" electronjs.org-new/build
 
-      # Step 12: Build Bootstrap Documentation
-      - name: Build Bootstrap Docs
-        run: |
-          git clone --depth=1 https://github.com/twbs/bootstrap
-          cd bootstrap
-          npm install
-          npm run docs-build
-          cd ..
-          tar czf "bootstrap 5.tar.gz" bootstrap/_site
-
-      # Step 13: Build DaisyUI Documentation
-      - name: Build DaisyUI Docs
-        run: |
-          git clone --depth=1 https://github.com/saadeghi/daisyui
-          cd daisyui
-          cd src/docs/
-          npm install
-          npm run build
-          cd ../..
-          cd ..
-          tar czf "daisyui.tar.gz" daisyui/src/docs/build
 
       # Step 14: Build TailwindCSS Documentation
       - name: Build TailwindCSS Docs
@@ -262,3 +221,38 @@ jobs:
           cp -r node_modules/@mdn/yari/client/build/ .
           cd ..
           tar czf "Mozilla Developer Network.tar.gz" content/build
+
+
+
+
+          
+      # Step 11: Build Electron Documentation
+      - name: Build Electron Docs
+        run: |
+          git clone --depth=1 https://github.com/electron/electronjs.org-new
+          cd electronjs.org-new
+          yarn install
+          yarn build
+          cd ..
+          tar czf "Electron.tar.gz" electronjs.org-new/build
+      # Step 6: Build Express.js Documentation
+      - name: Build Express.js Docs
+        run: |
+          git clone --depth=1 https://github.com/expressjs/expressjs.com
+          cd expressjs.com
+          sed -i "s|'110', ||g" Gemfile
+          bundle install
+          gem install jekyll-redirect-from
+          bundle exec jekyll build
+          cd ..
+          tar czf "expressjs.tar.gz" expressjs.com/_site
+
+      # Step 12: Build Bootstrap Documentation
+      - name: Build Bootstrap Docs
+        run: |
+          git clone --depth=1 https://github.com/twbs/bootstrap
+          cd bootstrap
+          npm install
+          npm run docs-build
+          cd ..
+          tar czf "bootstrap 5.tar.gz" bootstrap/_site
