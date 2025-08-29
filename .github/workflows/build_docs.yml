@@ -290,11 +290,11 @@ jobs:
           name: bootstrap 5.tar.gz
           path: bootstrap 5.tar.gz
 
-      # - name: Upload TailwindCSS Artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: tailwindcss.tar.gz
-      #     path: tailwindcss.tar.gz
+      - name: Upload TailwindCSS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tailwindcss.tar.gz
+          path: tailwindcss.tar.gz
       - name: Upload Axios Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -335,11 +335,11 @@ jobs:
       #   with:
       #     name: fastapi.tar.gz
       #     path: fastapi.tar.gz
-      - name: Upload TypeScript Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: typescript.tar.gz
-          path: typescript.tar.gz
+      # - name: Upload TypeScript Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: typescript.tar.gz
+      #     path: typescript.tar.gz
       - name: Upload MDN Artifact
         uses: actions/upload-artifact@v4
         with:
