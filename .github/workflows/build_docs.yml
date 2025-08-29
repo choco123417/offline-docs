@@ -178,7 +178,7 @@ jobs:
           pnpm bootstrap
           pnpm build-site
           cd ..
-          tar czf "typescript.tar.gz" TypeScript-Website/docs/build
+          tar czf "typescript.tar.gz" TypeScript-Website/build
 
       # Step 24: Build MDN Documentation
       - name: Build MDN Docs
