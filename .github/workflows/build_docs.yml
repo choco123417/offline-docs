@@ -127,27 +127,27 @@ jobs:
       #     tar czf "keras.tar.gz" keras-io/site
 
       # Step 19: Build NumPy Documentation
-      - name: Build NumPy Docs
-        run: |
-          git clone --depth=1 https://github.com/numpy/numpy
-          cd numpy
-          pip install -r requirements/all_requirements.txt
-          cd doc/
-          make html
-          cd ..
-          tar czf "numpy.tar.gz" numpy/doc/build/html
+      # - name: Build NumPy Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/numpy/numpy
+      #     cd numpy
+      #     pip install -r requirements/all_requirements.txt
+      #     cd doc/
+      #     make html
+      #     cd ..
+      #     tar czf "numpy.tar.gz" numpy/doc/build/html
 
       # Step 20: Build NumPy Tutorials Documentation
-      - name: Build NumPy Tutorials Docs
-        run: |
-          git clone --depth=1 https://github.com/numpy/numpy-tutorials
-          cd numpy-tutorials
-          cd site
-          pip install -r requirements.txt
-          make html
-          cd ..
-          cd ..
-          tar czf "numpy-tutorials.tar.gz" numpy-tutorials/site/_build
+      # - name: Build NumPy Tutorials Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/numpy/numpy-tutorials
+      #     cd numpy-tutorials
+      #     cd site
+      #     pip install -r requirements.txt
+      #     make html
+      #     cd ..
+      #     cd ..
+      #     tar czf "numpy-tutorials.tar.gz" numpy-tutorials/site/_build
 
       # Step 21: Build Pandas Documentation
       - name: Build Pandas Docs
