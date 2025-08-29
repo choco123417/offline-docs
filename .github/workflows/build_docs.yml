@@ -61,15 +61,15 @@ jobs:
           tar czf "expressjs.tar.gz" expressjs.com/_site
 
       # Step 7: Build Ethereum.org Website
-      - name: Build Ethereum.org Website
-        run: |
-          git clone --depth=1 https://github.com/ethereum/ethereum-org-website
-          cd ethereum-org-website
-          # Corepack will now handle using the correct pnpm version.
-          pnpm install
-          pnpm run build
-          cd ..
-          tar czf "ethereum.tar.gz" ethereum-org-website/public
+      # - name: Build Ethereum.org Website
+      #   run: |
+      #     git clone --depth=1 https://github.com/ethereum/ethereum-org-website
+      #     cd ethereum-org-website
+      #     # Corepack will now handle using the correct pnpm version.
+      #     pnpm install
+      #     pnpm run build
+      #     cd ..
+      #     tar czf "ethereum.tar.gz" ethereum-org-website/public
 
       # Step 8: Build Hardhat Documentation
       - name: Build Hardhat Docs
