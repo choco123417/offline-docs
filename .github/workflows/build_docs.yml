@@ -67,7 +67,7 @@ jobs:
           cd ethereum-org-website
           # Corepack will now handle using the correct pnpm version.
           pnpm install
-          pnpm run build:10gb
+          pnpm run build
           cd ..
           tar czf "ethereum.tar.gz" ethereum-org-website/public
 
