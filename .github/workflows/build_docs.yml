@@ -101,15 +101,15 @@ jobs:
       #     tar czf "solidity.tar.gz" solidity/docs/_build/html
 
       # Step 10: Build Vite Documentation
-      - name: Build Vite Docs
-        run: |
-          git clone --depth=1 https://github.com/vitejs/vite
-          cd vite
-          # Corepack ensures the correct pnpm version is used.
-          pnpm install --store=node_modules/.pnpm-store
-          npm run ci-docs
-          cd ..
-          tar czf "vite.tar.gz" vite/docs/.vitepress/dist
+      # - name: Build Vite Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/vitejs/vite
+      #     cd vite
+      #     # Corepack ensures the correct pnpm version is used.
+      #     pnpm install --store=node_modules/.pnpm-store
+      #     npm run ci-docs
+      #     cd ..
+      #     tar czf "vite.tar.gz" vite/docs/.vitepress/dist
 
       # Step 11: Build Electron Documentation
       - name: Build Electron Docs
