@@ -150,13 +150,13 @@ jobs:
       #     tar czf "numpy-tutorials.tar.gz" numpy-tutorials/site/_build
 
       # Step 21: Build Pandas Documentation
-      - name: Build Pandas Docs
-        run: |
-          git clone --depth=1 https://github.com/pandas-dev/pandas
-          cd pandas
-          cd ..
-          # Note: The tar command will archive the entire current directory.
-          tar czf "pandas.tar.gz" ./
+      # - name: Build Pandas Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/pandas-dev/pandas
+      #     cd pandas
+      #     cd ..
+      #     # Note: The tar command will archive the entire current directory.
+      #     tar czf "pandas.tar.gz" ./
 
       # Step 22: Build FastAPI Documentation
       - name: Build FastAPI Docs
