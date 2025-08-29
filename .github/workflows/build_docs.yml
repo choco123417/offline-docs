@@ -1,5 +1,7 @@
 name: Build and Package Documentation
 
+# This workflow is triggered on a push to the main branch
+# or can be manually triggered from the GitHub UI.
 on:
   push:
     branches:
@@ -8,36 +10,44 @@ on:
 
 jobs:
   build:
+    # The job runs on the latest version of Ubuntu.
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out the repository's code.
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up the Node.js environment.
+      # This is necessary for building projects that use npm, yarn, or pnpm.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          # This caches dependencies for faster builds.
+          cache: 'pnpm'
 
+      # Step 3: Enable Corepack.
+      # This allows projects to use the package manager and version
+      # specified in their "packageManager" field in package.json.
+      - name: Enable Corepack
+        run: corepack enable
+
+      # Step 4: Set up the Python environment.
+      # This is needed for Python-based projects.
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-          
+
+      # Step 5: Set up the Ruby environment.
+      # This step fixes the "bundle: command not found" error for Jekyll projects.
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1' 
+          ruby-version: '3.1'
 
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flit
-          
-      - name: Enable corepack
-        run: |
-          corepack enable
-
+      # Step 6: Build Express.js Documentation
       - name: Build Express.js Docs
         run: |
           git clone --depth=1 https://github.com/expressjs/expressjs.com
@@ -49,15 +59,18 @@ jobs:
           cd ..
           tar czf "expressjs.tar.gz" expressjs.com/_site
 
+      # Step 7: Build Ethereum.org Website
       - name: Build Ethereum.org Website
         run: |
           git clone --depth=1 https://github.com/ethereum/ethereum-org-website
           cd ethereum-org-website
-          yarn install
-          yarn build:10gb
+          # Corepack will now handle using the correct pnpm version.
+          pnpm install
+          pnpm run build:10gb
           cd ..
           tar czf "ethereum.tar.gz" ethereum-org-website/public
 
+      # Step 8: Build Hardhat Documentation
       - name: Build Hardhat Docs
         run: |
           git clone --depth=1 https://github.com/NomicFoundation/hardhat
@@ -73,26 +86,31 @@ jobs:
           cd ..
           tar czf "hardhat.tar.gz" hardhat/docs/out
 
+      # Step 9: Build Solidity Documentation
       - name: Build Solidity Docs
         run: |
           git clone --depth=1 https://github.com/ethereum/solidity
           cd solidity
           cd docs
           pip install -r requirements.txt
+          # Using TZ=UTC to ensure consistent build output.
           TZ=UTC make html
           cd ..
           cd ..
           tar czf "solidity.tar.gz" solidity/docs/_build/html
 
+      # Step 10: Build Vite Documentation
       - name: Build Vite Docs
         run: |
           git clone --depth=1 https://github.com/vitejs/vite
           cd vite
-          npm i -g pnpm
-          npx pnpm i --store=node_modules/.pnpm-store && npm run ci-docs
+          # Corepack ensures the correct pnpm version is used.
+          pnpm install --store=node_modules/.pnpm-store
+          npm run ci-docs
           cd ..
           tar czf "vite.tar.gz" vite/docs/.vitepress/dist
 
+      # Step 11: Build Electron Documentation
       - name: Build Electron Docs
         run: |
           git clone --depth=1 https://github.com/electron/electronjs.org-new
@@ -102,6 +120,7 @@ jobs:
           cd ..
           tar czf "Electron.tar.gz" electronjs.org-new/build
 
+      # Step 12: Build Bootstrap Documentation
       - name: Build Bootstrap Docs
         run: |
           git clone --depth=1 https://github.com/twbs/bootstrap
@@ -111,6 +130,7 @@ jobs:
           cd ..
           tar czf "bootstrap 5.tar.gz" bootstrap/_site
 
+      # Step 13: Build DaisyUI Documentation
       - name: Build DaisyUI Docs
         run: |
           git clone --depth=1 https://github.com/saadeghi/daisyui
@@ -122,16 +142,19 @@ jobs:
           cd ..
           tar czf "daisyui.tar.gz" daisyui/src/docs/build
 
+      # Step 14: Build TailwindCSS Documentation
       - name: Build TailwindCSS Docs
         run: |
           git clone --depth=1 https://github.com/tailwindlabs/tailwindcss.com
           cd tailwindcss.com
           yarn install
+          # Modifying the next.config.mjs file to disable image optimization.
           sed -i "s|export default {|export default {\n  images: { unoptimized: true},\n|g" next.config.mjs
           yarn export
           cd ..
           tar czf "tailwindcss.tar.gz" tailwindcss.com/out
 
+      # Step 15: Build Axios Documentation
       - name: Build Axios Docs
         run: |
           git clone --depth=1 https://github.com/axios/axios-docs
@@ -141,6 +164,7 @@ jobs:
           cd ..
           tar czf "axios.tar.gz" axios-docs/public
 
+      # Step 16: Build React Documentation
       - name: Build React Docs
         run: |
           git clone --depth=1 https://github.com/reactjs/reactjs.org
@@ -150,15 +174,18 @@ jobs:
           cd ..
           tar czf "reactjs.tar.gz" reactjs.org/public
 
+      # Step 17: Build Vue.js Documentation
       - name: Build Vue.js Docs
         run: |
           git clone --depth=1 https://github.com/vuejs/docs
           cd docs
-          npm i -g pnpm
-          npx pnpm i --store=node_modules/.pnpm-store && npm run ci-docs
+          # Corepack ensures the correct pnpm version is used.
+          pnpm install --store=node_modules/.pnpm-store
+          npm run ci-docs
           cd ..
           tar czf "vuejs V3.tar.gz" docs/.vitepress/dist
 
+      # Step 18: Build Keras Documentation
       - name: Build Keras Docs
         run: |
           git clone --depth=1 https://github.com/keras-team/keras-io
@@ -170,6 +197,7 @@ jobs:
           cd ..
           tar czf "keras.tar.gz" keras-io/site
 
+      # Step 19: Build NumPy Documentation
       - name: Build NumPy Docs
         run: |
           git clone --depth=1 https://github.com/numpy/numpy
@@ -180,6 +208,7 @@ jobs:
           cd ..
           tar czf "numpy.tar.gz" numpy/doc/build/html
 
+      # Step 20: Build NumPy Tutorials Documentation
       - name: Build NumPy Tutorials Docs
         run: |
           git clone --depth=1 https://github.com/numpy/numpy-tutorials
@@ -191,13 +220,16 @@ jobs:
           cd ..
           tar czf "numpy-tutorials.tar.gz" numpy-tutorials/site/_build
 
+      # Step 21: Build Pandas Documentation
       - name: Build Pandas Docs
         run: |
           git clone --depth=1 https://github.com/pandas-dev/pandas
           cd pandas
           cd ..
+          # Note: The tar command will archive the entire current directory.
           tar czf "pandas.tar.gz" ./
 
+      # Step 22: Build FastAPI Documentation
       - name: Build FastAPI Docs
         run: |
           git clone --depth=1 https://github.com/tiangolo/fastapi
@@ -208,6 +240,7 @@ jobs:
           cd ..
           tar czf "fastapi.tar.gz" fastapi/site
 
+      # Step 23: Build TypeScript Documentation
       - name: Build TypeScript Docs
         run: |
           git clone --depth=1 https://github.com/microsoft/TypeScript-Website
@@ -218,6 +251,7 @@ jobs:
           cd ..
           tar czf "typescript.tar.gz" TypeScript-Website/docs/build
 
+      # Step 24: Build MDN Documentation
       - name: Build MDN Docs
         run: |
           git clone --depth=1 https://github.com/mdn/content
