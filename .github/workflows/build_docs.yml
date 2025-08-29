@@ -110,7 +110,7 @@ jobs:
           pnpm install
           # Modifying the next.config.mjs file to disable image optimization.
           sed -i "s|export default {|export default {\n  images: { unoptimized: true},\n|g" next.config.ts
-          pnpm export
+          pnpm run build
           cd ..
           tar czf "tailwindcss.tar.gz" tailwindcss.com/out
 
