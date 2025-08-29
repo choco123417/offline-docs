@@ -1,0 +1,220 @@
+name: Build and Package Documentation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flit
+
+      - name: Build Express.js Docs
+        run: |
+          git clone --depth=1 https://github.com/expressjs/expressjs.com
+          cd expressjs.com
+          sed -i "s|'110', ||g" Gemfile
+          bundle install
+          gem install jekyll-redirect-from
+          bundle exec jekyll build
+          cd ..
+          tar czf "expressjs.tar.gz" expressjs.com/_site
+
+      - name: Build Ethereum.org Website
+        run: |
+          git clone --depth=1 https://github.com/ethereum/ethereum-org-website
+          cd ethereum-org-website
+          yarn install
+          yarn build:10gb
+          cd ..
+          tar czf "ethereum.tar.gz" ethereum-org-website/public
+
+      - name: Build Hardhat Docs
+        run: |
+          git clone --depth=1 https://github.com/NomicFoundation/hardhat
+          cd hardhat
+          yarn --frozen-lockfile
+          cd docs/
+          yarn
+          yarn add sharp
+          sed -i 's|images: {|images: {\nloader: "imgix", path:"localhost:8000/",\n|g' hardhat/docs/next.config.js
+          yarn build
+          npx next export
+          cd ..
+          cd ..
+          tar czf "hardhat.tar.gz" hardhat/docs/out
+
+      - name: Build Solidity Docs
+        run: |
+          git clone --depth=1 https://github.com/ethereum/solidity
+          cd solidity
+          cd docs
+          pip install -r requirements.txt
+          TZ=UTC make html
+          cd ..
+          cd ..
+          tar czf "solidity.tar.gz" solidity/docs/_build/html
+
+      - name: Build Vite Docs
+        run: |
+          git clone --depth=1 https://github.com/vitejs/vite
+          cd vite
+          npm i -g pnpm
+          npx pnpm i --store=node_modules/.pnpm-store && npm run ci-docs
+          cd ..
+          tar czf "vite.tar.gz" vite/docs/.vitepress/dist
+
+      - name: Build Electron Docs
+        run: |
+          git clone --depth=1 https://github.com/electron/electronjs.org-new
+          cd electronjs.org-new
+          yarn install
+          yarn build
+          cd ..
+          tar czf "Electron.tar.gz" electronjs.org-new/build
+
+      - name: Build Bootstrap Docs
+        run: |
+          git clone --depth=1 https://github.com/twbs/bootstrap
+          cd bootstrap
+          npm install
+          npm run docs-build
+          cd ..
+          tar czf "bootstrap 5.tar.gz" bootstrap/_site
+
+      - name: Build DaisyUI Docs
+        run: |
+          git clone --depth=1 https://github.com/saadeghi/daisyui
+          cd daisyui
+          cd src/docs/
+          npm install
+          npm run build
+          cd ../..
+          cd ..
+          tar czf "daisyui.tar.gz" daisyui/src/docs/build
+
+      - name: Build TailwindCSS Docs
+        run: |
+          git clone --depth=1 https://github.com/tailwindlabs/tailwindcss.com
+          cd tailwindcss.com
+          yarn install
+          sed -i "s|export default {|export default {\n  images: { unoptimized: true},\n|g" next.config.mjs
+          yarn export
+          cd ..
+          tar czf "tailwindcss.tar.gz" tailwindcss.com/out
+
+      - name: Build Axios Docs
+        run: |
+          git clone --depth=1 https://github.com/axios/axios-docs
+          cd axios-docs
+          npm install -g inert-ssg
+          inert build
+          cd ..
+          tar czf "axios.tar.gz" axios-docs/public
+
+      - name: Build React Docs
+        run: |
+          git clone --depth=1 https://github.com/reactjs/reactjs.org
+          cd reactjs.org
+          yarn install
+          yarn build
+          cd ..
+          tar czf "reactjs.tar.gz" reactjs.org/public
+
+      - name: Build Vue.js Docs
+        run: |
+          git clone --depth=1 https://github.com/vuejs/docs
+          cd docs
+          npm i -g pnpm
+          npx pnpm i --store=node_modules/.pnpm-store && npm run ci-docs
+          cd ..
+          tar czf "vuejs V3.tar.gz" docs/.vitepress/dist
+
+      - name: Build Keras Docs
+        run: |
+          git clone --depth=1 https://github.com/keras-team/keras-io
+          cd keras-io
+          pip install -r requirements.txt
+          cd scripts
+          python autogen.py make
+          cd ..
+          cd ..
+          tar czf "keras.tar.gz" keras-io/site
+
+      - name: Build NumPy Docs
+        run: |
+          git clone --depth=1 https://github.com/numpy/numpy
+          cd numpy
+          pip install -r doc_requirements.txt
+          cd doc/
+          make html
+          cd ..
+          tar czf "numpy.tar.gz" numpy/doc/build/html
+
+      - name: Build NumPy Tutorials Docs
+        run: |
+          git clone --depth=1 https://github.com/numpy/numpy-tutorials
+          cd numpy-tutorials
+          cd site
+          pip install -r requirements.txt
+          make html
+          cd ..
+          cd ..
+          tar czf "numpy-tutorials.tar.gz" numpy-tutorials/site/_build
+
+      - name: Build Pandas Docs
+        run: |
+          git clone --depth=1 https://github.com/pandas-dev/pandas
+          cd pandas
+          cd ..
+          tar czf "pandas.tar.gz" ./
+
+      - name: Build FastAPI Docs
+        run: |
+          git clone --depth=1 https://github.com/tiangolo/fastapi
+          cd fastapi
+          pip install flit
+          flit install --user --extras doc
+          sh scripts/build-docs.sh
+          cd ..
+          tar czf "fastapi.tar.gz" fastapi/site
+
+      - name: Build TypeScript Docs
+        run: |
+          git clone --depth=1 https://github.com/microsoft/TypeScript-Website
+          cd TypeScript-Website
+          yarn install
+          yarn bootstrap
+          yarn build-site
+          cd ..
+          tar czf "typescript.tar.gz" TypeScript-Website/docs/build
+
+      - name: Build MDN Docs
+        run: |
+          git clone --depth=1 https://github.com/mdn/content
+          cd content
+          yarn install
+          yarn build
+          cp -r node_modules/@mdn/yari/client/build/ .
+          cd ..
+          tar czf "Mozilla Developer Network.tar.gz" content/build
