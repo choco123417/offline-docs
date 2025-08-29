@@ -174,9 +174,9 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/microsoft/TypeScript-Website
           cd TypeScript-Website
-          yarn install
-          yarn bootstrap
-          yarn build-site
+          pnpm install
+          pnpm bootstrap
+          pnpm build-site
           cd ..
           tar czf "typescript.tar.gz" TypeScript-Website/docs/build
 
