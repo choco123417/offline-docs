@@ -170,15 +170,15 @@ jobs:
       #     tar czf "fastapi.tar.gz" fastapi/site
 
       # Step 23: Build TypeScript Documentation
-      - name: Build TypeScript Docs
-        run: |
-          git clone --depth=1 https://github.com/microsoft/TypeScript-Website
-          cd TypeScript-Website
-          pnpm install
-          pnpm bootstrap
-          pnpm build-site
-          cd ..
-          tar czf "typescript.tar.gz" TypeScript-Website/build
+      # - name: Build TypeScript Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/microsoft/TypeScript-Website
+      #     cd TypeScript-Website
+      #     pnpm install
+      #     pnpm bootstrap
+      #     pnpm build-site
+      #     cd ..
+      #     tar czf "typescript.tar.gz" TypeScript-Website/build
 
       # Step 24: Build MDN Documentation
       - name: Build MDN Docs
