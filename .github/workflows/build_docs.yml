@@ -72,33 +72,33 @@ jobs:
       #     tar czf "ethereum.tar.gz" ethereum-org-website/public
 
       # Step 8: Build Hardhat Documentation
-      - name: Build Hardhat Docs
-        run: |
-          git clone --depth=1 https://github.com/NomicFoundation/hardhat
-          cd hardhat
-          yarn --frozen-lockfile
-          cd docs/
-          yarn
-          yarn add sharp
-          sed -i 's|images: {|images: {\nloader: "imgix", path:"localhost:8000/",\n|g' hardhat/docs/next.config.js
-          yarn build
-          npx next export
-          cd ..
-          cd ..
-          tar czf "hardhat.tar.gz" hardhat/docs/out
+      # - name: Build Hardhat Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/NomicFoundation/hardhat
+      #     cd hardhat
+      #     yarn --frozen-lockfile
+      #     cd docs/
+      #     yarn
+      #     yarn add sharp
+      #     sed -i 's|images: {|images: {\nloader: "imgix", path:"localhost:8000/",\n|g' hardhat/docs/next.config.js
+      #     yarn build
+      #     npx next export
+      #     cd ..
+      #     cd ..
+      #     tar czf "hardhat.tar.gz" hardhat/docs/out
 
       # Step 9: Build Solidity Documentation
-      - name: Build Solidity Docs
-        run: |
-          git clone --depth=1 https://github.com/ethereum/solidity
-          cd solidity
-          cd docs
-          pip install -r requirements.txt
-          # Using TZ=UTC to ensure consistent build output.
-          TZ=UTC make html
-          cd ..
-          cd ..
-          tar czf "solidity.tar.gz" solidity/docs/_build/html
+      # - name: Build Solidity Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/ethereum/solidity
+      #     cd solidity
+      #     cd docs
+      #     pip install -r requirements.txt
+      #     # Using TZ=UTC to ensure consistent build output.
+      #     TZ=UTC make html
+      #     cd ..
+      #     cd ..
+      #     tar czf "solidity.tar.gz" solidity/docs/_build/html
 
       # Step 10: Build Vite Documentation
       - name: Build Vite Docs
