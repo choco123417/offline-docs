@@ -102,60 +102,29 @@ jobs:
 
 
 
-      # Step 14: Build TailwindCSS Documentation
-      - name: Build TailwindCSS Docs
-        run: |
-          git clone --depth=1 https://github.com/tailwindlabs/tailwindcss.com
-          cd tailwindcss.com
-          pnpm install
-          # Modifying the next.config.mjs file to disable image optimization.
-          sed -i "s|export default {|export default {\n  images: { unoptimized: true},\n|g" next.config.ts
-          pnpm run build
-          cd ..
-          tar czf "tailwindcss.tar.gz" tailwindcss.com/.next
-
-      # Step 15: Build Axios Documentation
-      - name: Build Axios Docs
-        run: |
-          git clone --depth=1 https://github.com/axios/axios-docs
-          cd axios-docs
-          npm install -g inert-ssg
-          inert build
-          cd ..
-          tar czf "axios.tar.gz" axios-docs/public
-
-      # Step 16: Build React Documentation
-      - name: Build React Docs
-        run: |
-          git clone --depth=1 https://github.com/reactjs/reactjs.org
-          cd reactjs.org
-          yarn install
-          yarn build
-          cd ..
-          tar czf "reactjs.tar.gz" reactjs.org/public
 
       # Step 17: Build Vue.js Documentation
-      - name: Build Vue.js Docs
-        run: |
-          git clone --depth=1 https://github.com/vuejs/docs
-          cd docs
-          # Corepack ensures the correct pnpm version is used.
-          pnpm install --store=node_modules/.pnpm-store
-          npm run ci-docs
-          cd ..
-          tar czf "vuejs V3.tar.gz" docs/.vitepress/dist
+      # - name: Build Vue.js Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/vuejs/docs
+      #     cd docs
+      #     # Corepack ensures the correct pnpm version is used.
+      #     pnpm install --store=node_modules/.pnpm-store
+      #     npm run ci-docs
+      #     cd ..
+      #     tar czf "vuejs V3.tar.gz" docs/.vitepress/dist
 
       # Step 18: Build Keras Documentation
-      - name: Build Keras Docs
-        run: |
-          git clone --depth=1 https://github.com/keras-team/keras-io
-          cd keras-io
-          pip install -r requirements.txt
-          cd scripts
-          python autogen.py make
-          cd ..
-          cd ..
-          tar czf "keras.tar.gz" keras-io/site
+      # - name: Build Keras Docs
+      #   run: |
+      #     git clone --depth=1 https://github.com/keras-team/keras-io
+      #     cd keras-io
+      #     pip install -r requirements.txt
+      #     cd scripts
+      #     python autogen.py make
+      #     cd ..
+      #     cd ..
+      #     tar czf "keras.tar.gz" keras-io/site
 
       # Step 19: Build NumPy Documentation
       - name: Build NumPy Docs
@@ -256,3 +225,34 @@ jobs:
           npm run docs-build
           cd ..
           tar czf "bootstrap 5.tar.gz" bootstrap/_site
+      # Step 14: Build TailwindCSS Documentation
+      - name: Build TailwindCSS Docs
+        run: |
+          git clone --depth=1 https://github.com/tailwindlabs/tailwindcss.com
+          cd tailwindcss.com
+          pnpm install
+          # Modifying the next.config.mjs file to disable image optimization.
+          sed -i "s|export default {|export default {\n  images: { unoptimized: true},\n|g" next.config.ts
+          pnpm run build
+          cd ..
+          tar czf "tailwindcss.tar.gz" tailwindcss.com/.next
+
+      # Step 15: Build Axios Documentation
+      - name: Build Axios Docs
+        run: |
+          git clone --depth=1 https://github.com/axios/axios-docs
+          cd axios-docs
+          npm install -g inert-ssg
+          inert build
+          cd ..
+          tar czf "axios.tar.gz" axios-docs/public
+
+      # Step 16: Build React Documentation
+      - name: Build React Docs
+        run: |
+          git clone --depth=1 https://github.com/reactjs/reactjs.org
+          cd reactjs.org
+          yarn install
+          yarn build
+          cd ..
+          tar czf "reactjs.tar.gz" reactjs.org/public
