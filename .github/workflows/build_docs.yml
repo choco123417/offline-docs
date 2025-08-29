@@ -256,3 +256,11 @@ jobs:
           yarn build
           cd ..
           tar czf "reactjs.tar.gz" reactjs.org/public
+
+      # Step 25: Upload the generated tar.gz files as an artifact
+      - name: Upload Documentation Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-documentation
+          path: "*.tar.gz"
+
